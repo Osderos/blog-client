@@ -1,18 +1,25 @@
-import React,{useEffect,useState} from 'react'
-import {getAuthors} from '../utils/getData'
+import React, { useEffect, useState } from "react";
+import Post from "./Post";
+import { getPosts } from "../utils/getData";
 
 function Main() {
-    const [authors, setAuthors] = useState([])
+  const [authors, setAuthors] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-useEffect(()=>{
+  useEffect(() => {
     console.log("Main component did mount");
-    getAuthors()
+    const loadPosts = async () => {
+      setPosts(await getPosts());
+    };
 
-},[])
+    loadPosts();
+  }, []);
 
-  return (
-    <div>Main</div>
-  )
+  const listPosts = posts.map((post) => (
+    <Post title={post.title} author={post.author} date={post.date} key={post._id} published={post.isPublished}/>
+  ));
+
+  return <div>{listPosts}</div>;
 }
 
-export default Main
+export default Main;
