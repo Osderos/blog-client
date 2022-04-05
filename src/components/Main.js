@@ -16,7 +16,7 @@ function Main() {
   }, []);
 
   const listPosts = posts.map((post) => (
-    <Post title={post.title} author={post.author} date={post.date} key={post._id} published={post.isPublished}/>
+    <Post title={post.title} author={post.author} date={post.date} key={post._id} published={post.isPublished} postId={post._id}/>
   ));
 
   return <div>{listPosts}</div>;
