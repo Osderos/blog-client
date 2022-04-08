@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
-import PostDetailed from "./components/PostDetailed";
+import Post from "./components/Post";
 
 const RouteSwitch = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/post/:id" element={<PostDetailed />} />
+        <Route path="/post/:id" element={<Post />} />
       </Routes>
     </BrowserRouter>
   );
