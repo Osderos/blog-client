@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPosts } from "../redux";
+import { fetchPosts, fetchComments } from "../redux";
 import { formatedDate } from "../utils/dateFormat";
 import { Link } from "react-router-dom";
 
@@ -10,6 +10,7 @@ function PostContainer() {
 
   useEffect(() => {
     dispatch(fetchPosts());
+    dispatch(fetchComments())
   }, []);
 
   const publishedPosts = postData.posts.filter(
