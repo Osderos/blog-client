@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { formatedDate } from "../utils/dateFormat";
 import { fetchComments, fetchPosts } from "../redux";
+import CommentForm from "./CommentForm";
 
 function Post() {
   const [clicked, setClicked] = useState(false);
@@ -26,7 +27,6 @@ function Post() {
   //     setLikes(likes )
   // }
 
-  
   const findPost = postData.posts.find(({ _id }) => _id === params.id);
   const findComments = commentData.comments.filter(
     ({ post }) => post === params.id
@@ -56,26 +56,29 @@ function Post() {
         <p>{findPost.text}</p>
       </div>
       <div>
-      <h1>Comments</h1>
-      {findComments.map((comment) => (
-        <div key={comment._id}>
-          <h3>{comment.title}</h3>
-          <p>{comment.text}</p>
-          <p>By: {comment.author}</p>
-          <span>On: {formatedDate(comment.date)}</span>
-        </div>
-      ))}
+        <h1>Comments</h1>
+        {findComments.map((comment) => (
+          <div key={comment._id}>
+            <h3>{comment.title}</h3>
+            <p>{comment.text}</p>
+            <p>By: {comment.author}</p>
+            <span>On: {formatedDate(comment.date)}</span>
+          </div>
+        ))}
+      </div>
     </div>
-    </div>
-    
   );
 
-
-  return postData.loading || commentData.loading
-    ? loadingView
-    : postData.error
-    ? errorPostView
-    : postView;
+  return (
+    <div>
+      {postData.loading || commentData.loading
+        ? loadingView
+        : postData.error
+        ? errorPostView
+        : postView}
+      <CommentForm postId={params} />
+    </div>
+  );
 }
 
 export default Post;
