@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import uniqid from "uniqid";
+import axios from "axios";
 
 function CommentForm(props) {
   const [msg, setMsg] = useState({
@@ -16,25 +17,27 @@ function CommentForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const data = {
+      authorComment: msg.author,
+      titleComment: msg.title,
+      textComment: msg.text,
+      postComment: props.postId,
+    };
     try {
- 
-      const res = await fetch(
-        `http://localhost:3000/api/post/${props.postId.id}/comments/create`,
+      const req = await fetch(
+        "http://localhost:3000/api/post/comments/create",
         {
           method: "POST",
-          body: JSON.stringify({
-            author: msg.author,
-            title: msg.title,
-            text: msg.text,
-            post: props.postId.id,
-          }),
+          body: JSON.stringify(data),
+          headers: { "Content-Type": "application/json" },
         }
       );
 
-      const resJson = await res.json();
+      const resJson = await req.json();
       setErrorMsg(resJson.errors);
 
-      if (res.status === 200) {
+      if (req.status === 200) {
         setMsg({
           author: "",
           title: "",
@@ -44,11 +47,6 @@ function CommentForm(props) {
     } catch (err) {
       console.log(err);
     }
-    setMsg({
-      author: "",
-      title: "",
-      text: "",
-    });
   };
 
   return (
@@ -87,13 +85,9 @@ function CommentForm(props) {
         <button type="submit">Add comment</button>
       </form>
       <ul>
-        {errorMsg.map((err) => (
-          <li
-            key={uniqid()}
-          >
-            {err.msg}
-          </li>
-        ))}
+        {errorMsg
+          ? errorMsg.map((err) => <li key={uniqid()}>{err.msg}</li>)
+          : null}
       </ul>
     </div>
   );

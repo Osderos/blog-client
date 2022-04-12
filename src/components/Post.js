@@ -44,30 +44,31 @@ function Post() {
     </div>
   );
 
-  const postView = (
-    <div>
-      <h1>{findPost.title}</h1>
+  const postView =
+    findPost && findComments ? (
       <div>
-        <p>Article by: {findPost.author}</p>
-        <span>Posted on: {formatedDate(findPost.date)}</span>
-        <p>Likes: {likes}</p>
+        <h1>{findPost.title}</h1>
+        <div>
+          <p>Article by: {findPost.author}</p>
+          <span>Posted on: {formatedDate(findPost.date)}</span>
+          <p>Likes: {likes}</p>
+        </div>
+        <div>
+          <p>{findPost.text}</p>
+        </div>
+        <div>
+          <h1>Comments</h1>
+          {findComments.map((comment) => (
+            <div key={comment._id}>
+              <h3>{comment.title}</h3>
+              <p>{comment.text}</p>
+              <p>By: {comment.author}</p>
+              <span>On: {formatedDate(comment.date)}</span>
+            </div>
+          ))}
+        </div>
       </div>
-      <div>
-        <p>{findPost.text}</p>
-      </div>
-      <div>
-        <h1>Comments</h1>
-        {findComments.map((comment) => (
-          <div key={comment._id}>
-            <h3>{comment.title}</h3>
-            <p>{comment.text}</p>
-            <p>By: {comment.author}</p>
-            <span>On: {formatedDate(comment.date)}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    ) : null;
 
   return (
     <div>
