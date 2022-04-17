@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import uniqid from "uniqid";
-import axios from "axios";
+import { fetchComments } from "../redux";
+import { useDispatch } from "react-redux";
 
 function CommentForm(props) {
   const [msg, setMsg] = useState({
@@ -44,6 +45,7 @@ function CommentForm(props) {
           text: "",
         });
       }
+      window.location.reload()
     } catch (err) {
       console.log(err);
     }

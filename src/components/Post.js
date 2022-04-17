@@ -4,11 +4,9 @@ import { useParams } from "react-router-dom";
 import { formatedDate } from "../utils/dateFormat";
 import { fetchComments, fetchPosts } from "../redux";
 import CommentForm from "./CommentForm";
+import Comment from "./Comment";
 
 function Post() {
-  const [clicked, setClicked] = useState(false);
-  const [likes, setLikes] = useState(0);
-
   const postData = useSelector((state) => state.post);
   const commentData = useSelector((state) => state.comment);
   const dispatch = useDispatch();
@@ -16,20 +14,21 @@ function Post() {
 
   useEffect(() => {
     dispatch(fetchComments());
-    dispatch(fetchPosts());
+    return () => {
+      dispatch(fetchComments());
+    };
   }, []);
 
-  // const handleClick = () => {
-  //   setClicked(!clicked);
-  // };
-
-  // const addLike = ()=>{
-  //     setLikes(likes )
-  // }
+  useEffect(() => {
+    dispatch(fetchPosts());
+    return () => {
+      dispatch(fetchPosts());
+    };
+  }, []);
 
   const findPost = postData.posts.find(({ _id }) => _id === params.id);
   const findComments = commentData.comments.filter(
-    ({ post }) => post === params.id
+    ({ postComment }) => postComment === params.id
   );
 
   const loadingView = (
@@ -51,7 +50,6 @@ function Post() {
         <div>
           <p>Article by: {findPost.author}</p>
           <span>Posted on: {formatedDate(findPost.date)}</span>
-          <p>Likes: {likes}</p>
         </div>
         <div>
           <p>{findPost.text}</p>
@@ -59,12 +57,15 @@ function Post() {
         <div>
           <h1>Comments</h1>
           {findComments.map((comment) => (
-            <div key={comment._id}>
-              <h3>{comment.title}</h3>
-              <p>{comment.text}</p>
-              <p>By: {comment.author}</p>
-              <span>On: {formatedDate(comment.date)}</span>
-            </div>
+            <Comment
+              key={comment._id}
+              title={comment.titleComment}
+              text={comment.textComment}
+              author={comment.authorComment}
+              date={comment.date}
+              commentId={comment._id}
+              like={comment.likeComment}
+            />
           ))}
         </div>
       </div>

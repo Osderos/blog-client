@@ -1,9 +1,18 @@
-import React from 'react'
+import React from "react";
+import { AnimatedGradientTitle } from "./Animations/Animations";
 
 function Header() {
   return (
-    <div>Header</div>
-  )
+    <header>
+      <AnimatedGradientTitle
+        duration="5s"
+        timingFunction="ease-in-out"
+        iterationCount="infinite"
+      >
+        OsDeRos's Blog Mock
+      </AnimatedGradientTitle>
+    </header>
+  );
 }
 
-export default Header
+export default Header;

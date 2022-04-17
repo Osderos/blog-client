@@ -3,6 +3,7 @@ import {
   FETCH_COMMENTS_REQUEST,
   FETCH_COMMENTS_SUCCESS,
   FETCH_COMMENTS_FAILURE,
+  LIKE_COMMENT,
 } from "./commentTypes";
 
 export const fetchCommentsRequest = () => {

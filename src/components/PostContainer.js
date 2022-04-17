@@ -10,11 +10,15 @@ function PostContainer() {
 
   useEffect(() => {
     dispatch(fetchPosts());
-    dispatch(fetchComments())
+    dispatch(fetchComments());
+    return () => {
+      dispatch(fetchPosts());
+      dispatch(fetchComments());
+    };
   }, []);
 
   const publishedPosts = postData.posts.filter(
-    ({ isPublished }) => (isPublished === true)
+    ({ isPublished }) => isPublished === true
   );
 
   return postData.loading ? (
