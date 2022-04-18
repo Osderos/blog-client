@@ -1,9 +1,22 @@
-import React from 'react'
+import React from "react";
+
+import styled from "styled-components";
 
 function Footer() {
   return (
-    <div>Footer</div>
-  )
+    <FooterWrapper>
+      <i className="devicon-github-original"></i>
+      Osderos
+    </FooterWrapper>
+  );
 }
 
-export default Footer
+const FooterWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%
+  height: 20px;
+  color: white;
+`;
+
+export default Footer;
